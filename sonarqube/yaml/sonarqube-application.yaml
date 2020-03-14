@@ -1,0 +1,63 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: sonarqube
+  namespace: devops
+  labels:
+    k8s-app: sonarqube
+    version: 7.9.1
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: sonarqube
+      version: 7.9.1
+  template:
+    metadata:
+      labels:
+        k8s-app: sonarqube
+        version: 7.9.1
+        kubernetes.io/cluster-service: "true"
+    spec:
+      priorityClassName: system-cluster-critical
+      containers:
+      - image: 119.23.20.22:31000/library/sonarqube:7.9.1-community
+        name: sonarqube
+        ports:
+        - containerPort: 9000
+          name: port
+          protocol: TCP
+        resources:
+         requests:
+           memory: "2000Mi"
+         limits:
+           memory: "2000Mi"
+        env:
+          - name: "sonar.jdbc.username"
+            value: "root"
+          - name: "sonar.jdbc.password"
+            value: "123456"
+          - name: "sonar.jdbc.url"
+            value: "jdbc:postgresql://120.77.151.96:30543/sonar"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarqube
+  namespace: devops
+  labels:
+    k8s-app: sonarqube
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
+    kubernetes.io/name: "sonarqube"
+spec:
+  type: NodePort
+  ports:
+  - port: 9000
+    protocol: TCP
+    targetPort: port
+    nodePort: 30009
+  selector:
+    k8s-app: sonarqube

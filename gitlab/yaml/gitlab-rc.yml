@@ -1,0 +1,71 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab
+  namespace: devops
+  labels:
+    name: gitlab
+spec:
+  template:
+    metadata:
+      name: gitlab
+      labels:
+        name: gitlab
+    spec:
+      containers:
+      - name: gitlab
+        image: gitlab/gitlab-ce:v11.8.10
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: TZ
+          value: Asia/Shanghai
+        ports:
+        - name: http
+          containerPort: 80
+        - name: ssh
+          containerPort: 22
+        volumeMounts:
+        - mountPath: /var/log/gitlab
+          name: data
+          subPath: gitlab_log
+        - mountPath: /var/opt/gitlab
+          name: data
+          subPath: gitlab_data
+        - mountPath: /etc/gitlab
+          name: data
+          subPath: gitlab_config
+        - mountPath: /etc/gitlab/gitlab.rb
+          name: configmap-volume-0
+          subPath: gitlab.rb
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 30088
+            scheme: HTTP
+          initialDelaySeconds: 1800
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 30088
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+      volumes:
+      - name: data
+        hostPath:
+          path: /home/gitlabdata/data
+          type: Directory
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: gitlab.rb
+            path: gitlab.rb
+          name: gitlab-configmap
+        name: configmap-volume-0

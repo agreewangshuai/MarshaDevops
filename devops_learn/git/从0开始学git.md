@@ -273,6 +273,222 @@ git log  --oneline
 git blame 某文件
 ```
 
+### 六、 分支与标签
+
+#### 1. 创建分支
+
+1. 基于当前分支创建新分支
+
+```shell
+git branch 新分支
+```
+
+2. 基于指定分支创建新分支
+
+```shell
+git branch 新分支 已有分支
+```
+
+3. 基于某一个commit创建分支
+
+```shell
+git branch 新分支  某个commit的id
+```
+
+4. 创建分支并切换分支
+
+```shell
+git checkout -b 新分支
+```
+
+#### 2. 列出分支
+
+1. 列出本地分支
+
+```shell
+git branch -v
+```
+
+2. 列出本地和远端分支
+
+```shell
+git branch -av
+```
+
+3. 列出远端所有分支
+
+```shell
+git branch -rv
+```
+
+4. 列出名称符号某样式的远端分支
+
+```shell
+git branch -rv -l '某样式'
+```
+
+#### 3. 删除分支
+
+1. 安全删除本地分支
+
+```shell
+git branch -d 分支名
+```
+
+2. 强行删除本地分支
+
+```shell
+git branch -D 分支名
+```
+
+3. 删除已经合并到master分支的所有本地分支 (就是筛选出所有的合并到master上的分支除去*或者master分支，然后逐一删除)
+
+```shell
+git branch --merged master | grep -v '^\*\|master' | xargs -n 1 git branch -d 
+```
+
+4. 删除远端origin已经不存在的所有本地分支
+
+```shell
+git remote prune origin
+```
+
+### 4. 创建标签
+
+1. 在具体的commit的上创建标签
+
+```shell
+git tag 标签名 commit_id
+```
+
+### 七、 两个分支之前的合并集成
+
+1. 把A分支合并到当前分支，且为该合并创建一个commit
+
+```shell
+git merge A分支
+```
+
+2. 把A分支合并到B分支，且为该合并创建一个commit
+
+```shell
+git merge A分支 B分支
+```
+
+3. 把当前分支基于B分支做 rebase 以便把B分支合入到当前分支
+
+```shell
+git rebase B分支
+```
+
+4. 把A分支基于B分支做rebase,以便把B分支合并到A分支
+
+```shell
+git rebase B分支 A分支
+```
+
+5. 用mergetool解决冲突
+
+```shell
+git mergetool
+```
+
+### 八、 和远端进行交互
+
+1. 列出所有的remote
+
+```shell
+git remote -v
+```
+
+2. 增加remote
+
+```shell
+git remote add url地址
+```
+
+3. 删除remote
+
+```shell
+git remote remove remote名称
+```
+
+4. 改变remote的name
+
+```shell
+git remote rename 旧名称  新名称
+```
+
+5. 把远端所有分支和标签的变更都拉取到本地
+
+```shell
+git fetch remote
+```
+
+6. 把远端所有分支变更到本地，且merge到本地分支
+
+```shell
+git pull remote名称 分支名称
+```
+
+7. 把本地分支push到远端
+
+```shell
+git push -u remote名称 分支名称
+```
+
+8. 删除远端分支
+
+```shell
+git push remote --delete 远端分支名称
+or
+git push remote:远端分支名称
+```
+
+9. 向远端分支提交指定的标签
+
+```shell
+git push remote  标签名称
+```
+
+10. 向远端分支提交所有的标签
+
+```shell
+git push remote --tags
+```
+
+### 九、 常见的回滚操作系统
+
+#### 1. 未执行commit之前
+
+1. 如果文件修改了，但是还没有添加到暂存区，也就是还没有执行git add操作，则可以使用checkout来回滚
+
+```shell
+git checkout -- filename
+```
+
+2. 如果已经添加了暂存区，则可以用reset来撤销
+
+```shell
+git reset HEAD filename
+```
+
+#### 2. 执行了commit之后
+
+1. 使用revert来撤销某次提交
+
+```shell
+git revert commitID
+```
+
+2. 使用reset直接回滚到某个版本，回滚之后，该commit_id之后的内容全没有了，且不可追回
+
+```shell
+git reset --hard commitID
+```
+
+
+
 ### 写在最后：
 
 会持续更新git相关命令，Git命令还是很多的，需要多使用多练习。当然单单会命令还不行。理解原理，对命令的掌握和理解有很大的帮助。也会慢慢更新相关的原理文章。期待自己，也期待读者从本质上读懂git

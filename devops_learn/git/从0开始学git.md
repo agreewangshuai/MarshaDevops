@@ -1,5 +1,3 @@
-[TOC]
-
 # 从0开始学git
 
 既然要记录整个devops的学习与实践过程，那么git是不得不学的。 记得刚毕业那会，我也会使用git。大学期间做项目。也会使用SVN。
@@ -33,7 +31,7 @@ Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理�
 
 #### 说一下SVN集中式与GIT分布式
 
-![image-20200320154909425](C:\Users\ha\AppData\Roaming\Typora\typora-user-images\image-20200320154909425.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200321214519512.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzE2ODQ4,size_16,color_FFFFFF,t_70)
 
 集中式：指的是存在服务端和客户端。服务端充当中央代码库。客户端从服务端中获取代码。
 
@@ -49,7 +47,7 @@ Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理�
 
 - **版本库:** 工作区目录下".git"目录不属于工作区，而是Git的版本库
 
-  ![image-20200321201040242](C:\Users\ha\AppData\Roaming\Typora\typora-user-images\image-20200321201040242.png)
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200321214550320.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzE2ODQ4,size_16,color_FFFFFF,t_70)
 
 ### 安装Git
 

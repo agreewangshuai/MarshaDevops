@@ -10,8 +10,6 @@ spec:
       labels:
         app: jenkins
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: k8s-node1
       terminationGracePeriodSeconds: 10
       serviceAccountName: jenkins
       containers:

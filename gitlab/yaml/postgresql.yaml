@@ -40,11 +40,11 @@ spec:
         ports:
         - containerPort: 5432
         env:
-        - name: POSTGRES_DB             #数据库名称
-          value: "agreeDB"
-        - name: POSTGRES_USER           #用户名
+        - name: POSTGRES_DB
+          value: "gitlab"
+        - name: POSTGRES_USER
           value: "root"
-        - name: POSTGRES_PASSWORD       #密码
+        - name: POSTGRES_PASSWORD
           value: "123456"
         resources:
           limits:

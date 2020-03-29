@@ -23,7 +23,7 @@ spec:
     spec:
       priorityClassName: system-cluster-critical
       containers:
-      - image: 119.23.20.22:31000/library/sonarqube:7.9.1-community
+      - image: sonarqube:7.9.1-community
         name: sonarqube
         ports:
         - containerPort: 9000
@@ -40,7 +40,7 @@ spec:
           - name: "sonar.jdbc.password"
             value: "123456"
           - name: "sonar.jdbc.url"
-            value: "jdbc:postgresql://120.77.151.96:30543/sonar"
+            value: "jdbc:postgresql://ip:port/sonar"
 ---
 apiVersion: v1
 kind: Service
